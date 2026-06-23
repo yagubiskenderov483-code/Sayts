@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Telegram Premium — официальная активация</title>
+<style>
+  :root{
+    --bg:#0B121C;
+    --bg-soft:#101B29;
+    --card:#13202F;
+    --line:#1E2E40;
+    --text:#EAF1F7;
+    --muted:#7F92A6;
+    --accent:#2AABEE;
+    --accent2:#1488C9;
+    --gold:#F8C75A;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+
+  /* background ambient */
+  .glow{
+    position:fixed;top:-200px;left:50%;transform:translateX(-50%);
+    width:900px;height:900px;border-radius:50%;
+    background:radial-gradient(circle, rgba(42,171,238,0.18), transparent 60%);
+    pointer-events:none;z-index:0;
+  }
+
+  header{
+    position:sticky;top:0;z-index:10;
+    backdrop-filter:blur(10px);
+    background:rgba(11,18,28,0.7);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    max-width:1100px;margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 24px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;letter-spacing:0.2px;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent);}
+  .nav-cta{
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    color:#fff;padding:10px 18px;border-radius:10px;font-weight:600;font-size:14px;
+  }
+
+  section{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 24px;}
+
+  /* HERO */
+  .hero{padding:90px 24px 60px;text-align:center;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    color:var(--gold);font-size:13px;font-weight:600;letter-spacing:0.6px;text-transform:uppercase;
+    background:rgba(248,199,90,0.08);border:1px solid rgba(248,199,90,0.25);
+    padding:6px 14px;border-radius:999px;margin-bottom:24px;
+  }
+  .star{font-size:14px;}
+  h1{
+    font-size:clamp(34px,6vw,58px);
+    font-weight:800;letter-spacing:-1px;line-height:1.08;
+    margin-bottom:18px;
+  }
+  h1 span{
+    background:linear-gradient(135deg,var(--accent),#8AD8FF 50%,var(--gold));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .sub{
+    color:var(--muted);font-size:17px;max-width:540px;margin:0 auto 34px;
+  }
+  .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:50px;}
+  .btn-primary{
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    color:#fff;padding:15px 30px;border-radius:12px;font-weight:700;font-size:15px;
+    box-shadow:0 8px 24px rgba(42,171,238,0.35);
+    transition:transform .15s ease, box-shadow .15s ease;
+    display:inline-flex;align-items:center;gap:8px;
+  }
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(42,171,238,0.45);}
+  .btn-secondary{
+    border:1px solid var(--line);color:var(--text);padding:15px 26px;border-radius:12px;font-weight:600;font-size:15px;
+    background:rgba(255,255,255,0.02);
+  }
+  .btn-secondary:hover{border-color:var(--accent);}
+
+  /* trust strip */
+  .trust{
+    display:flex;justify-content:center;gap:36px;flex-wrap:wrap;
+    color:var(--muted);font-size:13px;margin-top:6px;
+  }
+  .trust span{display:flex;align-items:center;gap:6px;}
+
+  /* PRICING */
+  .pricing{padding:70px 24px;}
+  .section-title{text-align:center;margin-bottom:10px;font-size:32px;font-weight:800;}
+  .section-sub{text-align:center;color:var(--muted);margin-bottom:46px;font-size:15px;}
+  .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  @media(max-width:800px){.plans{grid-template-columns:1fr;}}
+  .plan{
+    background:var(--card);border:1px solid var(--line);border-radius:18px;
+    padding:30px 26px;position:relative;overflow:hidden;
+    transition:border-color .15s ease, transform .15s ease;
+  }
+  .plan:hover{border-color:var(--accent);transform:translateY(-4px);}
+  .plan.popular{border-color:var(--gold);}
+  .badge-pop{
+    position:absolute;top:18px;right:18px;
+    background:rgba(248,199,90,0.12);color:var(--gold);
+    font-size:11px;font-weight:700;letter-spacing:0.4px;text-transform:uppercase;
+    padding:5px 10px;border-radius:999px;border:1px solid rgba(248,199,90,0.3);
+  }
+  .plan-name{font-size:15px;color:var(--muted);font-weight:600;margin-bottom:10px;}
+  .plan-price{font-size:36px;font-weight:800;margin-bottom:4px;}
+  .plan-price small{font-size:15px;color:var(--muted);font-weight:600;}
+  .plan-old{color:var(--muted);text-decoration:line-through;font-size:14px;margin-bottom:18px;display:block;}
+  .plan-feats{list-style:none;margin:18px 0 26px;display:flex;flex-direction:column;gap:10px;font-size:14px;color:#C7D2DC;}
+  .plan-feats li{display:flex;gap:8px;align-items:flex-start;}
+  .check{color:var(--accent);font-weight:700;}
+  .plan-btn{
+    display:block;text-align:center;width:100%;padding:13px;border-radius:10px;
+    background:rgba(255,255,255,0.04);border:1px solid var(--line);font-weight:700;font-size:14px;
+  }
+  .plan.popular .plan-btn{
+    background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;color:#fff;
+  }
+
+  /* PAYMENT METHODS */
+  .pay{padding:50px 24px 70px;text-align:center;}
+  .pay-row{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin-top:30px;}
+  .pay-chip{
+    display:flex;align-items:center;gap:10px;
+    background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:14px 20px;font-weight:600;font-size:14px;
+  }
+  .pay-ico{width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;}
+  .ico-ton{background:#0098EA;color:#fff;}
+  .ico-usdt{background:#26A17B;color:#fff;}
+  .ico-stars{background:linear-gradient(135deg,#F8C75A,#F39C2A);color:#3A2400;}
+  .ico-card{background:#5A6B7D;color:#fff;}
+
+  /* HOW IT WORKS */
+  .how{padding:70px 24px;}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:40px;}
+  @media(max-width:800px){.steps{grid-template-columns:1fr;}}
+  .step{background:var(--bg-soft);border:1px solid var(--line);border-radius:16px;padding:26px;}
+  .step-num{
+    width:34px;height:34px;border-radius:10px;
+    background:rgba(42,171,238,0.12);color:var(--accent);
+    display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:16px;
+  }
+  .step h3{font-size:16px;margin-bottom:8px;}
+  .step p{color:var(--muted);font-size:14px;}
+
+  /* ORDER */
+  .order{padding:70px 24px;}
+  .order-box{
+    max-width:480px;margin:0 auto;background:var(--card);border:1px solid var(--line);
+    border-radius:18px;padding:30px;
+  }
+  .order-row{margin-bottom:18px;display:flex;flex-direction:column;gap:8px;}
+  .order-row label{font-size:13px;color:var(--muted);font-weight:600;}
+  .order-row select,.order-row input{
+    background:var(--bg-soft);border:1px solid var(--line);color:var(--text);
+    padding:12px 14px;border-radius:10px;font-size:14px;outline:none;
+  }
+  .order-row select:focus,.order-row input:focus{border-color:var(--accent);}
+  .order-result{margin-top:24px;border-top:1px solid var(--line);padding-top:22px;}
+  .order-id{font-size:14px;color:var(--muted);margin-bottom:14px;}
+  .order-id span{color:var(--accent);font-weight:700;}
+  .pay-detail{margin-bottom:14px;}
+  .pay-detail-label{font-size:12px;color:var(--muted);margin-bottom:4px;}
+  .pay-detail-value{font-size:15px;font-weight:600;}
+  .pay-detail-value.mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;word-break:break-all;background:var(--bg-soft);padding:8px 10px;border-radius:8px;border:1px solid var(--line);}
+  .pay-detail.important .pay-detail-label{color:var(--gold);}
+  .order-note{font-size:13px;color:var(--muted);margin-top:10px;}
+
+  /* FAQ */
+  .faq{padding:70px 24px 100px;}
+  .faq-item{border-bottom:1px solid var(--line);padding:20px 0;}
+  .faq-q{display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-weight:600;font-size:15px;}
+  .faq-q .plus{color:var(--accent);font-size:20px;transition:transform .2s ease;}
+  .faq-item.open .plus{transform:rotate(45deg);}
+  .faq-a{
+    color:var(--muted);font-size:14px;margin-top:0;max-height:0;overflow:hidden;
+    transition:max-height .25s ease, margin-top .25s ease;
+  }
+  .faq-item.open .faq-a{margin-top:12px;max-height:200px;}
+
+  footer{
+    border-top:1px solid var(--line);padding:30px 24px;text-align:center;color:var(--muted);font-size:13px;
+  }
+</style>
+</head>
+<body>
+
+<div class="glow"></div>
+
+<header>
+  <div class="nav">
+    <div class="brand"><span class="dot"></span> Premium Hub</div>
+    <a href="#pricing" class="nav-cta">Купить Premium</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="eyebrow"><span class="star">★</span> Мгновенная активация на любой аккаунт</div>
+  <h1>Telegram <span>Premium</span><br>без лишних движений</h1>
+  <p class="sub">Оплата картой, TON, USDT или Stars. Активация на ваш юзернейм — пароли и доступ к аккаунту не нужны.</p>
+  <div class="cta-row">
+    <a href="#pricing" class="btn-primary">Выбрать тариф →</a>
+    <a href="#how" class="btn-secondary">Как это работает</a>
+  </div>
+  <div class="trust">
+    <span>⚡ Активация за 5–15 минут</span>
+    <span>🔒 Безопасная сделка через бота</span>
+    <span>🇷🇺 Работает для аккаунтов из России</span>
+  </div>
+</section>
+
+<section class="pricing" id="pricing">
+  <div class="section-title">Тарифы</div>
+  <div class="section-sub">Цена ниже официальной — мы покупаем оптом через зарубежные методы оплаты</div>
+  <div class="plans">
+    <div class="plan">
+      <div class="plan-name">3 МЕСЯЦА</div>
+      <div class="plan-price">1 290 ₽</div>
+      <span class="plan-old">1 990 ₽</span>
+      <ul class="plan-feats">
+        <li><span class="check">✓</span> Все функции Premium</li>
+        <li><span class="check">✓</span> Без доступа к аккаунту</li>
+        <li><span class="check">✓</span> Поддержка 24/7</li>
+      </ul>
+      <a class="plan-btn" href="#order">Купить</a>
+    </div>
+    <div class="plan popular">
+      <span class="badge-pop">Выгодно</span>
+      <div class="plan-name">6 МЕСЯЦЕВ</div>
+      <div class="plan-price">2 190 ₽</div>
+      <span class="plan-old">3 490 ₽</span>
+      <ul class="plan-feats">
+        <li><span class="check">✓</span> Все функции Premium</li>
+        <li><span class="check">✓</span> Без доступа к аккаунту</li>
+        <li><span class="check">✓</span> Приоритетная поддержка</li>
+        <li><span class="check">✓</span> Скидка 37%</li>
+      </ul>
+      <a class="plan-btn" href="#order">Купить</a>
+    </div>
+    <div class="plan">
+      <div class="plan-name">12 МЕСЯЦЕВ</div>
+      <div class="plan-price">3 790 ₽</div>
+      <span class="plan-old">6 490 ₽</span>
+      <ul class="plan-feats">
+        <li><span class="check">✓</span> Все функции Premium</li>
+        <li><span class="check">✓</span> Без доступа к аккаунту</li>
+        <li><span class="check">✓</span> Поддержка 24/7</li>
+        <li><span class="check">✓</span> Лучшая цена за месяц</li>
+      </ul>
+      <a class="plan-btn" href="#order">Купить</a>
+    </div>
+  </div>
+</section>
+
+<section class="pay">
+  <div class="section-title" style="font-size:24px;">Способы оплаты</div>
+  <div class="pay-row">
+    <div class="pay-chip"><span class="pay-ico ico-ton">T</span> TON</div>
+    <div class="pay-chip"><span class="pay-ico ico-usdt">$</span> USDT</div>
+    <div class="pay-chip"><span class="pay-ico ico-stars">★</span> Telegram Stars</div>
+    <div class="pay-chip"><span class="pay-ico ico-card">₽</span> Карта РФ</div>
+  </div>
+</section>
+
+<section class="how" id="how">
+  <div class="section-title">Как это работает</div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>Выбираете тариф</h3>
+      <p>Жмёте «Купить» и переходите в Telegram-бота — он проведёт вас по шагам.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>Оплачиваете</h3>
+      <p>Любым удобным способом: картой, криптой или звёздами. Без передачи логина и пароля.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>Получаете Premium</h3>
+      <p>Активация приходит официальным подарком Telegram на ваш юзернейм за 5–15 минут.</p>
+    </div>
+  </div>
+</section>
+
+<section class="order" id="order">
+  <div class="section-title">Оформление заказа</div>
+  <div class="section-sub">Выберите тариф, получите номер заказа и реквизиты для оплаты</div>
+  <div class="order-box">
+    <div class="order-row">
+      <label>Тариф</label>
+      <select id="planSelect">
+        <option value="3|1290">3 месяца — 1 290 ₽</option>
+        <option value="6|2190" selected>6 месяцев — 2 190 ₽</option>
+        <option value="12|3790">12 месяцев — 3 790 ₽</option>
+      </select>
+    </div>
+    <div class="order-row">
+      <label>Ваш юзернейм в Telegram</label>
+      <input id="tgUser" type="text" placeholder="@username">
+    </div>
+    <button class="btn-primary" id="genOrder" style="width:100%;justify-content:center;">Получить реквизиты →</button>
+
+    <div id="orderResult" class="order-result" style="display:none;">
+      <div class="order-id">Заказ <span id="orderNum"></span></div>
+      <div class="pay-detail">
+        <div class="pay-detail-label">К оплате</div>
+        <div class="pay-detail-value" id="orderSum"></div>
+      </div>
+      <div class="pay-detail">
+        <div class="pay-detail-label">TON-кошелёк</div>
+        <div class="pay-detail-value mono">UQDpGKBQvVA2ai5sUbp2Nd6qrv5n9a5M4pS-DiWU5LiDdvsl</div>
+      </div>
+      <div class="pay-detail">
+        <div class="pay-detail-label">Карта (Охо Банк)</div>
+        <div class="pay-detail-value mono">7905 8233 633</div>
+      </div>
+      <div class="pay-detail important">
+        <div class="pay-detail-label">Укажите в комментарии к платежу</div>
+        <div class="pay-detail-value mono" id="orderComment"></div>
+      </div>
+      <p class="order-note">После оплаты напишите номер заказа и скрин перевода в Telegram — активируем Premium вручную в течение 5–15 минут.</p>
+    </div>
+  </div>
+</section>
+
+<section class="faq">
+  <div class="section-title">Вопросы</div>
+  <div class="faq-item open">
+    <div class="faq-q">Нужен ли доступ к моему аккаунту? <span class="plus">+</span></div>
+    <div class="faq-a">Нет, активация происходит официальным механизмом подарков Telegram — достаточно юзернейма.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Сколько занимает активация? <span class="plus">+</span></div>
+    <div class="faq-a">В среднем 5–15 минут после оплаты.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Можно ли оплатить из России? <span class="plus">+</span></div>
+    <div class="faq-a">Да, доступна оплата картой РФ, а также TON, USDT и Stars.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Где оформить заказ? <span class="plus">+</span></div>
+    <div class="faq-a">Все заказы оформляются через нашего Telegram-бота — добавьте кнопку/ссылку на бота ниже.</div>
+  </div>
+</section>
+
+<footer>
+  © 2026 Premium Hub · Поддержка через Telegram
+</footer>
+
+<script>
+  document.querySelectorAll('.faq-q').forEach(q=>{
+    q.addEventListener('click',()=>{
+      q.parentElement.classList.toggle('open');
+    });
+  });
+
+  document.getElementById('genOrder').addEventListener('click',()=>{
+    const plan = document.getElementById('planSelect').value.split('|');
+    const months = plan[0], price = plan[1];
+    const orderNum = Math.floor(1000 + Math.random()*8999);
+    document.getElementById('orderNum').textContent = '#' + orderNum;
+    document.getElementById('orderSum').textContent = price + ' ₽ (' + months + ' мес.)';
+    document.getElementById('orderComment').textContent = 'Заказ #' + orderNum;
+    document.getElementById('orderResult').style.display = 'block';
+  });
+</script>
+
+</body>
+</html>
