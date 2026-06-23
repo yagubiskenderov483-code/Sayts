@@ -323,19 +323,29 @@
         <div class="pay-detail-label">К оплате</div>
         <div class="pay-detail-value" id="orderSum"></div>
       </div>
-      <div class="pay-detail">
-        <div class="pay-detail-label">TON-кошелёк</div>
-        <div class="pay-detail-value mono">UQDpGKBQvVA2ai5sUbp2Nd6qrv5n9a5M4pS-DiWU5LiDdvsl</div>
+
+      <div class="order-row">
+        <label>Способ оплаты</label>
+        <select id="paySelect">
+          <option value="ton">TON</option>
+          <option value="usdt_trc20">USDT (TRC20)</option>
+          <option value="card">Карта (Охо Банк)</option>
+        </select>
       </div>
-      <div class="pay-detail">
-        <div class="pay-detail-label">Карта (Охо Банк)</div>
-        <div class="pay-detail-value mono">7905 8233 633</div>
+
+      <div class="pay-detail" id="payAddrBlock">
+        <div class="pay-detail-label" id="payAddrLabel">TON-кошелёк</div>
+        <div class="pay-detail-value mono" id="payAddrValue">UQDpGKBQvVA2ai5sUbp2Nd6qrv5n9a5M4pS-DiWU5LiDdvsl</div>
       </div>
+
       <div class="pay-detail important">
         <div class="pay-detail-label">Укажите в комментарии к платежу</div>
         <div class="pay-detail-value mono" id="orderComment"></div>
       </div>
-      <p class="order-note">После оплаты напишите номер заказа и скрин перевода в Telegram — активируем Premium вручную в течение 5–15 минут.</p>
+
+      <button class="btn-primary" id="confirmPay" style="width:100%;justify-content:center;margin-top:8px;">Я оплатил →</button>
+      <p class="order-note" id="confirmedNote" style="display:none;">Принято! Напишите номер заказа и скрин перевода в Telegram — активируем Premium вручную в течение 5–15 минут.</p>
+      <p class="order-note">Активация подтверждается вручную после проверки перевода — это не автоматическая оплата.</p>
     </div>
   </div>
 </section>
@@ -379,6 +389,27 @@
     document.getElementById('orderSum').textContent = price + ' ₽ (' + months + ' мес.)';
     document.getElementById('orderComment').textContent = 'Заказ #' + orderNum;
     document.getElementById('orderResult').style.display = 'block';
+    document.getElementById('confirmedNote').style.display = 'none';
+    updatePayAddr();
+  });
+
+  const payAddrMap = {
+    ton: { label: 'TON-кошелёк', value: 'UQDpGKBQvVA2ai5sUbp2Nd6qrv5n9a5M4pS-DiWU5LiDdvsl' },
+    usdt_trc20: { label: 'USDT TRC20-адрес', value: 'Укажи свой TRC20-адрес здесь' },
+    card: { label: 'Карта (Охо Банк)', value: '7905 8233 633' }
+  };
+
+  function updatePayAddr(){
+    const sel = document.getElementById('paySelect').value;
+    const data = payAddrMap[sel];
+    document.getElementById('payAddrLabel').textContent = data.label;
+    document.getElementById('payAddrValue').textContent = data.value;
+  }
+
+  document.getElementById('paySelect').addEventListener('change', updatePayAddr);
+
+  document.getElementById('confirmPay').addEventListener('click',()=>{
+    document.getElementById('confirmedNote').style.display = 'block';
   });
 </script>
 
